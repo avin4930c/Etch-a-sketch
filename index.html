@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="etch a sketch.css">
+    <title>Etch a sketch</title>
+</head>
+<body>
+    <div>
+        <h1>Etch a sketch Grid</h1>
+    
+    <div id="input-section">
+        <label>Number of squares per side for the new grid</label><br>
+        <input type="range" name="noofsquare" id="noofsquare" min="2" max="64" value="16" oninput="this.nextElementSibling.value = this.value">
+        <output>16</output><br>
+        <a class="btn" href="#">Confirm</a>
+    </div>
+    
+    <div id="main-div" class="squares"></div>
+    </div>
+    
+    <script>
+        const mainGrid = document.querySelector("#main-div");
+        const btns = document.querySelector('a.btn');
+        let gridRange = document.querySelector("#noofsquare");
+        
+        function squareHover(e) {
+            this.classList.add("square-hovered");
+        }
+        function enableGrid(e) {
+            let squarevalue = gridRange.value;
+            let columGridValue = "auto ".repeat(squarevalue);   
+            console.log(columGridValue);
+            let rowGridValue = "auto ".repeat(squarevalue);
+
+            mainGrid.style.gridTemplateColumns = columGridValue;
+            mainGrid.style.gridTemplateRow = rowGridValue;
+
+            for(let x = 0; x < squarevalue * squarevalue; x++) {
+                if (x == 0) {
+                    mainGrid.innerHTML = "";
+                    mainGrid.classList = "squares";
+                }
+                const squareDiv = document.createElement("div");
+                squareDiv.id = `square-div-${x}`;
+                squareDiv.classList.add("square-div");
+                mainGrid.appendChild(squareDiv);
+            };
+
+            let squaredivs = document.querySelectorAll(".square-div");
+            squaredivs.forEach(div => div.addEventListener("mouseover", squareHover));
+        }
+        btns.addEventListener("click", enableGrid);
+        
+    </script>
+</body>
+</html>
